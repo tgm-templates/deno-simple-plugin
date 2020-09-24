@@ -6,6 +6,14 @@
     {
       "name": "pluginName",
       "description": "Plugin name"
+    },
+    {
+      "name": "author_name",
+      "description": "author's name"
+    },
+    {
+      "name": "author_email",
+      "description": "author's email"
     }
   ],
   "files": [
