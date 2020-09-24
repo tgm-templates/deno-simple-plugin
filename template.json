@@ -1,0 +1,14 @@
+{
+  "name": "deno-simple-plugin",
+  "repository": "https://github.com/tgm-templates/deno-simple-plugin",
+  "description": "Deno simple plugin by Rust",
+  "variables": [
+    {
+      "name": "pluginName",
+      "description": "Plugin name"
+    }
+  ],
+  "files": [
+    "Cargo.toml"
+  ]
+}
