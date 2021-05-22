@@ -1,4 +1,4 @@
-import {multiply, welcome} from "./mod.ts";
+import {multiply} from "./mod.ts";
 
-console.log(multiply(1.1, 2.2));
-console.log(welcome("Deno"));
+const result = multiply(1.0, 2.0);
+console.log(result);
