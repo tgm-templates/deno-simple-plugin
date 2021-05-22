@@ -1,9 +1,30 @@
-import {
-    loadPlugin,
-    importFromPlugin,
-} from "https://deno.land/x/calcite@2.3/calcite.ts";
+const pluginName = "@pluginName@";
 
-await loadPlugin("deno_digest_plugin", "file://target/debug/");
+function loadPlugin(pluginName: string) {
+    let filenameSuffix = ".so";
+    let filenamePrefix = "lib";
 
-export const multiply = importFromPlugin('multiply') as (a: number, b: number) => number
-export const welcome = importFromPlugin('welcome') as (name: string) => string
+    if (Deno.build.os === "windows") {
+        filenameSuffix = ".dll";
+        filenamePrefix = "";
+    }
+    if (Deno.build.os === "darwin") {
+        filenameSuffix = ".dylib";
+    }
+    const filename = `./target/release/${filenamePrefix}${pluginName}${filenameSuffix}`;
+    const pluginRid = Deno.openPlugin(filename);
+    console.log(`Plugin rid: ${pluginRid}`);
+}
+
+loadPlugin(pluginName);
+
+// @ts-ignore
+const core = Deno.core;
+
+export function multiply(a: number, b: number): number {
+    const result = core.opSync(
+        "op_multiply_sync",
+        {a, b}
+    );
+    return result as number;
+}
