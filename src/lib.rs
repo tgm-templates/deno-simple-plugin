@@ -1,29 +1,48 @@
-#[calcite::deno_op]
-fn multiply(a: f64, b: f64) -> f64 {
-    multiply_impl(a, b)
+use std::borrow::Cow;
+use std::cell::RefCell;
+use std::rc::Rc;
+
+use deno_core::error::bad_resource_id;
+use deno_core::error::AnyError;
+use deno_core::op_async;
+use deno_core::op_sync;
+use deno_core::Extension;
+use deno_core::OpState;
+use deno_core::Resource;
+use deno_core::ResourceId;
+use deno_core::ZeroCopyBuf;
+use serde::Deserialize;
+
+#[no_mangle]
+pub fn init() -> Extension {
+    Extension::builder()
+        .ops(vec![
+            ("op_multiply_sync", op_sync(op_multiply_sync)),
+        ])
+        .build()
 }
 
-fn multiply_impl(a: f64, b: f64) -> f64 {
-    a * b
+
+#[derive(Debug, Deserialize)]
+struct SumArgs {
+    a: f32,
+    b: f32,
 }
 
-#[calcite::deno_op]
-fn welcome(name: &str) -> String {
-    welcome_impl(name)
-}
+fn op_multiply_sync(
+    _state: &mut OpState,
+    args: SumArgs,
+    zero_copy: Option<ZeroCopyBuf>,
+) -> Result<f32, AnyError> {
+    println!("Hello from sync plugin op.");
 
-fn welcome_impl(name: &str) -> String {
-    return format!("Hello {}!", name);
-}
+    println!("args: {:?}", args);
 
-calcite::export!(multiply, welcome);
+    Ok(args.a + args.b)
+}
 
 #[cfg(test)]
 mod tests {
-    use crate::multiply_impl;
-
     #[test]
-    fn test_multiply() {
-        assert_eq!(multiply_impl(2.0, 2.0), 4.0);
-    }
+    fn test_multiply() {}
 }
