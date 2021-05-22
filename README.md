@@ -1,9 +1,8 @@
 Deno simple plugin
 ==================
 
-Deno simple Rust plugin: use Calcite framework to create Rust Deno plugin for digest.
-
+Deno simple Rust plugin with new extension API
 
 # References
 
-* Calcite: library for easily creating deno plugins https://github.com/Srinivasa314/calcite
+* test_plugin crate: https://github.com/denoland/deno/tree/main/test_plugin
