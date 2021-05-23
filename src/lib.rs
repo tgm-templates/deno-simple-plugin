@@ -24,21 +24,21 @@ pub fn init() -> Extension {
 
 
 #[derive(Debug, Deserialize)]
-struct SumArgs {
+struct MultiplyArgs {
     a: f32,
     b: f32,
 }
 
 fn op_multiply_sync(
     _state: &mut OpState,
-    args: SumArgs,
+    args: MultiplyArgs,
     zero_copy: Option<ZeroCopyBuf>,
 ) -> Result<f32, AnyError> {
     println!("Hello from sync plugin op.");
 
     println!("args: {:?}", args);
 
-    Ok(args.a + args.b)
+    Ok(args.a * args.b)
 }
 
 #[cfg(test)]
